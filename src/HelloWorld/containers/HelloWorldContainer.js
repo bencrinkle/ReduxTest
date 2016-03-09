@@ -4,7 +4,7 @@ import HelloWorld from '../components/HelloWorld';
 
 const mapStateToProps = (state) => {
 	return {
-		value: state.helloWorld
+		value: state.name
 	};
 };
 
