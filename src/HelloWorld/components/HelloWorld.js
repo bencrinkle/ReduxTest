@@ -1,11 +1,16 @@
 import React, { PropTypes } from 'react';
+import { Panel, Input } from 'react-bootstrap';
 
-const HelloWorld = ({ onChange, value}) => (
-	<div>
-		<p>A simple hello world type component, add text to the input to see it appear above. This demonstrates a simple binding with state</p>
+const HelloWorld = ({onChange, value}) => (
+	<Panel>
+		<p>A simple hello world type component, add text to the input to see it appear below. This demonstrates a simple binding with state</p>
 		<p>Hello {value}</p>
-		<input type="text" onChange={onChange}/>
-	</div>
+		<Input
+			type="text"
+			placeholder="Enter text"
+			onChange={onChange}
+		/>
+	</Panel>
 );
 
 HelloWorld.propTypes = {

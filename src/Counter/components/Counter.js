@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react';
+import { Panel, Button, ButtonToolbar } from 'react-bootstrap';
 
 const Counter = ({value, onIncrement, onDecrement}) => (
-	<div>
+	<Panel>
 		<p>A simple counter component, click the + or - buttons to increment or decrement the counter. This demonstrates simple binding with state.</p>
 		<p>{value}</p>
-		<button onClick={onIncrement}>+</button>
-		<button onClick={onDecrement}>-</button>
-	</div>
+		<ButtonToolbar>
+			<Button bsStyle="success" onClick={onIncrement}>+</Button>
+			<Button bsStyle="danger" onClick={onDecrement}>-</Button>
+		</ButtonToolbar>
+	</Panel>
 );
 
 Counter.propTypes = {

@@ -5,8 +5,7 @@ import PostsList from '../components/PostsList';
 
 class PostsListContainer extends Component {
 	componentDidMount(){
-		const { dispatch } = this.props;
-		dispatch(getPosts());
+		this.props.dispatch(getPosts());
 	}
 	render(){
 		return(

@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React, { Component, PropTypes } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, IndexLink, Link, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 //Containers
@@ -17,18 +17,30 @@ import posts from './PostsList/reducers/posts';
 const reducers = combineReducers({counter, name: helloWorld, posts});
 //Store
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+//Bootstrap
+import { Nav, NavItem, Navbar, Grid, Row, Col, PageHeader } from 'react-bootstrap';
+import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
 
 const root = document.getElementById('app');
 
 class App extends Component {
 	render(){
 		return(
-			<div>
-				<IndexLink to="/">Home</IndexLink>
-				<Link to="counter">Counter</Link>
-				<Link to="postsList">Posts</Link>
-				{this.props.children}
-			</div>
+			<Grid>
+				<Row>
+					<Col xs={12} md={12}>
+						<PageHeader>React/Redux Playground <small>A playground for some basic React/Redux concepts</small></PageHeader>
+						<Navbar>
+							<Nav bsStyle="pills" activeKey={1}>
+								<IndexLinkContainer to={{ pathname: '/'}}><NavItem eventKey={1} title='Home'>Home</NavItem></IndexLinkContainer>
+								<LinkContainer to={{ pathname: 'counter'}}><NavItem eventKey={2} title='Counter'>Counter</NavItem></LinkContainer>
+								<LinkContainer to={{ pathname: 'postsList'}}><NavItem eventKey={3} title='Posts'>Posts</NavItem></LinkContainer>
+							</Nav>
+						</Navbar>
+						{this.props.children}
+					</Col>
+				</Row>
+			</Grid>
 		);
 	}
 }

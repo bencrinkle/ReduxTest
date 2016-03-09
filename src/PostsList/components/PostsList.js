@@ -1,20 +1,17 @@
 import React, { PropTypes, Component } from 'react';
+import { Panel } from 'react-bootstrap';
 
 export default class PostsList extends Component {
   render() {
     return (
-      <div>
+      <Panel>
         <p>A simple async call to populate a list of posts. This demonstrates async calls within redux</p>
-        <ul>
           {this.props.posts.map((post, i) =>
-            <li key={i}>
-              <p>{post.id}</p>
-              <p>{post.title}</p>
-              <p>{post.body}</p>
-            </li>
+            <Panel key={i} header={post.title}>
+              {post.body}
+            </Panel>
           )}
-        </ul>
-      </div>
+      </Panel>
     );
   }
 }
