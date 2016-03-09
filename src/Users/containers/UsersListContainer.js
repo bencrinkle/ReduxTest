@@ -14,16 +14,15 @@ class UsersListContainer extends Component {
 		this.props.dispatch(getAllUsers());
 	}
 	handleSort(sortBy){
-		console.log(sortBy);
 		this.props.dispatch(updateSortBy(sortBy));
 	}
 	render(){
 		return(
 			<Panel>
 				<ButtonToolbar>
-					<Button onClick={this.handleSort('name')}>Name</Button>
-					<Button>Email</Button>
-					<Button>Username</Button>
+					<Button onClick={() => this.handleSort('name')}>Name</Button>
+					<Button onClick={() => this.handleSort('email')}>Email</Button>
+					<Button onClick={() => this.handleSort('username')}>Username</Button>
 				</ButtonToolbar>
 				<UsersList users={this.props.users}/>
 			</Panel>
