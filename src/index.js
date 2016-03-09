@@ -40,7 +40,6 @@ App.propTypes = {
 const routes = (
 	<Route path="/" component={App}>
 		<IndexRoute component={HelloWorldContainer} />
-		<Route path="helloworld" component={HelloWorldContainer} />
 		<Route path="counter" component={CounterContainer}/>
 		<Route path="postsList" component={PostsListContainer}/>
 	</Route>

@@ -4,9 +4,6 @@ import { getPosts } from '../actions/postsListActions';
 import PostsList from '../components/PostsList';
 
 class PostsListContainer extends Component {
-	constructor(props) {
-		super(props);
-	}
 	componentDidMount(){
 		const { dispatch } = this.props;
 		dispatch(getPosts());
