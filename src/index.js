@@ -10,11 +10,13 @@ import thunkMiddleware from 'redux-thunk';
 import CounterContainer from './Counter/containers/CounterContainer';
 import HelloWorldContainer  from './HelloWorld/containers/HelloWorldContainer';
 import PostsListContainer from './PostsList/containers/PostsListContainer';
+import UsersContainer from './Users/containers/UsersContainer';
 //Reducers
 import counter from './Counter/reducers/counter';
 import helloWorld from './HelloWorld/reducers/helloWorld';
 import posts from './PostsList/reducers/posts';
-const reducers = combineReducers({counter, name: helloWorld, posts});
+import users from './Users/reducers/users';
+const reducers = combineReducers({counter, name: helloWorld, posts, users});
 //Store
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 //Bootstrap
@@ -35,6 +37,7 @@ class App extends Component {
 								<IndexLinkContainer to={{ pathname: '/'}}><NavItem eventKey={1} title='Home'>Home</NavItem></IndexLinkContainer>
 								<LinkContainer to={{ pathname: 'counter'}}><NavItem eventKey={2} title='Counter'>Counter</NavItem></LinkContainer>
 								<LinkContainer to={{ pathname: 'postsList'}}><NavItem eventKey={3} title='Posts'>Posts</NavItem></LinkContainer>
+								<LinkContainer to={{ pathname: 'users'}}><NavItem eventKey={3} title='Users'>Users</NavItem></LinkContainer>
 							</Nav>
 						</Navbar>
 						{this.props.children}
@@ -54,6 +57,7 @@ const routes = (
 		<IndexRoute component={HelloWorldContainer} />
 		<Route path="counter" component={CounterContainer}/>
 		<Route path="postsList" component={PostsListContainer}/>
+		<Route path="users" component={UsersContainer}/>
 	</Route>
 );
 
