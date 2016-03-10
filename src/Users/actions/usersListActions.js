@@ -7,10 +7,10 @@ const getUsersSuccess = (users) => {
 	};
 };
 
-export const updateSortBy = (sortBy) => {
+export const updateSortBy = (sortByType) => {
 	return {
 		type: 'UPDATE_SORT_BY',
-		sortBy
+		sortByType
 	};
 };
 

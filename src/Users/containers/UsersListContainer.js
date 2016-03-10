@@ -3,28 +3,22 @@ import { connect } from 'react-redux';
 import { getAllUsers, updateSortBy } from '../actions/usersListActions';
 import UsersList from '../components/UsersList';
 import _ from 'underscore';
-import { Panel, Button, ButtonToolbar } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 
-const sortUsers = (users, sortBy) => {
-	return _.sortBy(users, sortBy);
+const sortUsers = (users, sortByType, descending) => {
+	const sortedUsers = _.sortBy(users, sortByType);
+	return descending ? sortedUsers.reverse() : sortedUsers;
 };
 
 class UsersListContainer extends Component {
 	componentDidMount(){
 		this.props.dispatch(getAllUsers());
 	}
-	handleSort(sortBy){
-		this.props.dispatch(updateSortBy(sortBy));
-	}
 	render(){
+		const { sortBy, users, sortFunction } = this.props;
 		return(
 			<Panel>
-				<ButtonToolbar>
-					<Button onClick={() => this.handleSort('name')}>Name</Button>
-					<Button onClick={() => this.handleSort('email')}>Email</Button>
-					<Button onClick={() => this.handleSort('username')}>Username</Button>
-				</ButtonToolbar>
-				<UsersList users={this.props.users}/>
+				<UsersList sortFunction={sortFunction} sortBy={sortBy} users={users}/>
 			</Panel>
 		);
 	}
@@ -32,13 +26,25 @@ class UsersListContainer extends Component {
 
 UsersListContainer.propTypes = {
 	dispatch: PropTypes.func.isRequired,
-	users: PropTypes.array.isRequired
+	users: PropTypes.array.isRequired,
+	sortBy: PropTypes.object.isRequired,
+	sortFunction: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
 	return {
-		users: sortUsers(state.usersList.users, state.usersList.sortBy)
+		users: sortUsers(state.usersList.users, state.usersList.sortBy.type, state.usersList.sortBy.descending),
+		sortBy: state.usersList.sortBy
 	};
 };
 
-export default connect(mapStateToProps)(UsersListContainer);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		sortFunction: (sortByType) => {
+			dispatch(updateSortBy(sortByType));
+		},
+		dispatch
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersListContainer);
