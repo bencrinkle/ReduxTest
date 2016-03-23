@@ -6,12 +6,15 @@ import Partners from '../components/Partners';
 import { getPartners } from '../actions/partnersActions';
 
 class PartnersContainer extends Component {
+	componentDidUnmount(){
+		dispatch(updateIndustry(''));
+	}
 	render(){
-		const { partners, isFetching, handleClick } = this.props;
+		const { partners, isFetching, handleClick, industry } = this.props;
+		const content = isFetching ? <ProgressBar active now={45} /> : <Partners partners={partners}/>;
 		return(
 			<Panel>
-				<Industries handleClick={handleClick} />
-				{isFetching ? <ProgressBar active now={45} /> : <Partners partners={partners}/>}
+				{industry === '' ? <Industries handleClick={handleClick} /> : content}
 			</Panel>
 		);
 	}
@@ -20,6 +23,7 @@ class PartnersContainer extends Component {
 const mapStateToProps = (state) => {
 	return {
 		partners: state.partners.getIn(['partners']),
+		industry: state.partners.getIn(['industry']),
 		isFetching: state.partners.getIn(['getting_partners'])
 	};
 };
@@ -35,6 +39,7 @@ const mapDispatchToProps = (dispatch) => {
 
 PartnersContainer.propTypes = {
 	partners: PropTypes.object.isRequired,
+	industry: PropTypes.string.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	handleClick: PropTypes.func.isRequired,
 	dispatch: PropTypes.func.isRequired

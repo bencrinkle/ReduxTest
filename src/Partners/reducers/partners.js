@@ -15,6 +15,8 @@ const partners = (state = initialState, action ) => {
 			return state.set('partners', action.partners).set('getting_partners', false);
 		case 'GET_PARTNERS_ERROR':
 			return state.set('errors', action.errors).set('getting_partners', false);
+		case 'UPDATE_INDUSTRY':
+			return state.set('industry', action.industry);
 		default:
 			return state;
 	}

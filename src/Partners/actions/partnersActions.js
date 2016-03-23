@@ -21,9 +21,17 @@ const getPartnersError = (error) => {
 	};
 };
 
+const updateIndustry = (industry) => {
+	return {
+		type: 'UPDATE_INDUSTRY',
+		industry
+	};
+};
+
 export const getPartners = (industry) => {
 	return (dispatch) => {
 		dispatch(gettingPartners());
+		dispatch(updateIndustry(industry));
 		return fetch('http://localhost:3000/partners?trade=' + industry).then(response => {
 			if(response.ok){
 				response.json().then(json => {
@@ -34,6 +42,9 @@ export const getPartners = (industry) => {
 					dispatch(getPartnersError(fromJS(json)));
 				});
 			}
+		})
+		.catch(error => {
+			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
 	};
 };
