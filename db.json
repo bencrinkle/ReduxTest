@@ -1,0 +1,44 @@
+{
+  "partners": [
+    {
+      "id": 1,
+      "name": "Bob Dillan",
+      "trade": "Electrician",
+      "postcode": "BB4 9BP",
+      "rate": 40,
+      "rating": 3
+    },
+    {
+      "id": 2,
+      "name": "Alan Shearer",
+      "trade": "Electrician",
+      "postcode": "OL13 9BP",
+      "rate": 50,
+      "rating": 2
+    },
+    {
+      "id": 3,
+      "name": "Peter Pan",
+      "trade": "Joiner",
+      "postcode": "BB4 9BP",
+      "rate": 30,
+      "rating": 1
+    },
+    {
+      "id": 4,
+      "name": "Robin Hood",
+      "trade": "Joiner",
+      "postcode": "B44 0QB",
+      "rate": 50,
+      "rating": 5
+    },
+    {
+      "id": 5,
+      "name": "Morgan Freeman",
+      "trade": "Plasterer",
+      "postcode": "B44 0QB",
+      "rate": 50,
+      "rating": 3
+    }
+  ]
+}

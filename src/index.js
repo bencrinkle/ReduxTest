@@ -11,12 +11,15 @@ import CounterContainer from './Counter/containers/CounterContainer';
 import HelloWorldContainer  from './HelloWorld/containers/HelloWorldContainer';
 import PostsListContainer from './PostsList/containers/PostsListContainer';
 import UsersListContainer from './Users/containers/UsersListContainer';
+import PartnersContainer from './Partners/containers/PartnersContainer';
 //Reducers
 import counter from './Counter/reducers/counter';
 import helloWorld from './HelloWorld/reducers/helloWorld';
 import posts from './PostsList/reducers/posts';
 import usersList from './Users/reducers/usersList';
-const reducers = combineReducers({counter, name: helloWorld, posts, usersList});
+import partners from './Partners/reducers/partners';
+
+const reducers = combineReducers({counter, name: helloWorld, posts, usersList, partners});
 //Store
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 //Bootstrap
@@ -37,7 +40,8 @@ class App extends Component {
 								<IndexLinkContainer to={{ pathname: '/'}}><NavItem eventKey={1} title='Home'>Home</NavItem></IndexLinkContainer>
 								<LinkContainer to={{ pathname: 'counter'}}><NavItem eventKey={2} title='Counter'>Counter</NavItem></LinkContainer>
 								<LinkContainer to={{ pathname: 'postsList'}}><NavItem eventKey={3} title='Posts'>Posts</NavItem></LinkContainer>
-								<LinkContainer to={{ pathname: 'usersList'}}><NavItem eventKey={3} title='Users'>Users</NavItem></LinkContainer>
+								<LinkContainer to={{ pathname: 'usersList'}}><NavItem eventKey={4} title='Users'>Users</NavItem></LinkContainer>
+								<LinkContainer to={{ pathname: 'partners'}}><NavItem eventKey={5} title='Partners'>Partners</NavItem></LinkContainer>
 							</Nav>
 						</Navbar>
 						{this.props.children}
@@ -58,6 +62,8 @@ const routes = (
 		<Route path="counter" component={CounterContainer}/>
 		<Route path="postsList" component={PostsListContainer}/>
 		<Route path="usersList" component={UsersListContainer}/>
+		<Route path="partners" component={PartnersContainer}/>
+		<Route path="partners" component={PartnersContainer}/>
 	</Route>
 );
 

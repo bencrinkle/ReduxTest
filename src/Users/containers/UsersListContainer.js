@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getAllUsers, updateSortBy } from '../actions/usersListActions';
-import UsersList from '../components/UsersList';
 import _ from 'underscore';
+import { getAllUsers, sortUsers } from '../actions/usersListActions';
+import UsersList from '../components/UsersList';
 import { Panel } from 'react-bootstrap';
 
-const sortUsers = (users, sortByType, descending) => {
-	const sortedUsers = _.sortBy(users, sortByType);
-	return descending ? sortedUsers.reverse() : sortedUsers;
+const sort = (users, sortBy) => {
+	const sortedUsers = _.sortBy(users, sortBy.type);
+	return sortBy.descending ? sortedUsers.reverse() : sortedUsers;
 };
 
 class UsersListContainer extends Component {
@@ -25,23 +25,23 @@ class UsersListContainer extends Component {
 }
 
 UsersListContainer.propTypes = {
-	dispatch: PropTypes.func.isRequired,
 	users: PropTypes.array.isRequired,
 	sortBy: PropTypes.object.isRequired,
-	sortFunction: PropTypes.func.isRequired
+	sortFunction: PropTypes.func.isRequired,
+	dispatch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
 	return {
-		users: sortUsers(state.usersList.users, state.usersList.sortBy.type, state.usersList.sortBy.descending),
-		sortBy: state.usersList.sortBy
+		users: sort(state.usersList.users, state.usersList.sortBy),
+		sortBy: state.usersList.sortBy,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		sortFunction: (sortByType) => {
-			dispatch(updateSortBy(sortByType));
+			dispatch(sortUsers(sortByType));
 		},
 		dispatch
 	};

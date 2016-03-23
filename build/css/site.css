@@ -1,2 +1,19 @@
 th { cursor: pointer; }
 .glyphicon.sort { float: right; margin-top: 3px;}
+
+div.trade { 
+	width: 100%;
+	text-align: center; 
+	background: #aea79f; 
+	margin: 10px 0; 
+	border-radius: 4px;
+	cursor: pointer;
+	color: #fff;
+	padding: 10px 0;
+}
+
+div.trade img { margin-bottom: 10px; }
+
+div.trade:hover {
+	background: #978e83
+}

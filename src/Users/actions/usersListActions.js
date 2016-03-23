@@ -7,9 +7,9 @@ const getUsersSuccess = (users) => {
 	};
 };
 
-export const updateSortBy = (sortByType) => {
+export const sortUsers = (sortByType) => {
 	return {
-		type: 'UPDATE_SORT_BY',
+		type: 'SORT_USERS',
 		sortByType
 	};
 };
