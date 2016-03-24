@@ -21,17 +21,9 @@ const getPartnersError = (error) => {
 	};
 };
 
-const updateIndustry = (industry) => {
-	return {
-		type: 'UPDATE_INDUSTRY',
-		industry
-	};
-};
-
 export const getPartners = (industry) => {
 	return (dispatch) => {
 		dispatch(gettingPartners());
-		dispatch(updateIndustry(industry));
 		return fetch('http://localhost:3000/partners?trade=' + industry).then(response => {
 			if(response.ok){
 				response.json().then(json => {

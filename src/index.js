@@ -62,8 +62,7 @@ const routes = (
 		<Route path="counter" component={CounterContainer}/>
 		<Route path="postsList" component={PostsListContainer}/>
 		<Route path="usersList" component={UsersListContainer}/>
-		<Route path="partners" component={PartnersContainer}/>
-		<Route path="partners" component={PartnersContainer}/>
+		<Route path="partners(/:industry)" component={PartnersContainer}/>
 	</Route>
 );
 

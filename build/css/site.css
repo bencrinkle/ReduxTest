@@ -17,3 +17,17 @@ div.trade img { margin-bottom: 10px; }
 div.trade:hover {
 	background: #978e83
 }
+
+.partner-panel-left, .partner-panel-right {
+	text-align: center;
+}
+
+.rating {
+	margin-top: 4px;
+}
+
+.price {
+	font-size: 23px;
+	font-weight: bold;
+	clear: both;
+}

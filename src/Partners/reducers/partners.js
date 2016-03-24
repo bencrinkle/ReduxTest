@@ -4,7 +4,20 @@ const initialState = Map({
 	'getting_partners': false,
 	'partners': List(),
 	'errors': List(),
-	'industry': ''
+	'industries': List.of('Bricklayer',
+							'Builder',
+							'Cleaner',
+							'Decorator',
+							'Electrician',
+							'Gardener',
+							'Handyman',
+							'Heating Engineer',
+							'Joiner',
+							'Plasterer',
+							'Plumber',
+							'Roofer',
+							'Tiler',
+							'TV & Aerial Installer')
 });
 
 const partners = (state = initialState, action ) => {
@@ -15,8 +28,6 @@ const partners = (state = initialState, action ) => {
 			return state.set('partners', action.partners).set('getting_partners', false);
 		case 'GET_PARTNERS_ERROR':
 			return state.set('errors', action.errors).set('getting_partners', false);
-		case 'UPDATE_INDUSTRY':
-			return state.set('industry', action.industry);
 		default:
 			return state;
 	}

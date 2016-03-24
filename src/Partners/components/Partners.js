@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Table, Glyphicon} from 'react-bootstrap';
+import { Panel, Image, Glyphicon, Grid, Row, Col } from 'react-bootstrap';
 
 const getStars = (rating) => {
 	let stars = [];
@@ -10,28 +10,27 @@ const getStars = (rating) => {
 };
 
 const Partners = ({partners}) => (
-	<Table striped bordered condensed hover>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Trade</th>
-				<th>Postcode</th>
-				<th>Hourly Rate</th>
-				<th>Rating</th>
-			</tr>
-		</thead>
-		<tbody>
-			{partners.map((partner, i) =>
-				<tr key={i}>
-					<td>{partner.getIn(['name'])}</td>
-					<td>{partner.getIn(['trade'])}</td>
-					<td>{partner.getIn(['postcode'])}</td>
-					<td>{partner.getIn(['rate'])}</td>
-					<td>{getStars(partner.getIn(['rating']))}</td>
-				</tr>
-			)}
-		</tbody>
-	</Table>
+	<div>
+		{partners.map((partner, i) =>
+			<Panel key={i} header={partner.getIn(['name'])}>
+				<Grid fluid>
+					<Row>
+						<Col className="partner-panel-left" xs={12} md={2}>
+							<Image src={partner.getIn(['image'])} rounded />
+							<p className="rating">{getStars(partner.getIn(['rating']))}</p>
+						</Col>
+						<Col xs={12} md={8}>
+							<p>{partner.getIn(['summary'])}</p>
+							<p><Glyphicon glyph="map-marker"/> {partner.getIn(['milesaway'])} miles from you</p>
+						</Col>
+						<Col xs={12} md={2}>
+							<p>from <span className="price">{partner.getIn(['hourlyrate'])}</span> per hour</p>
+						</Col>
+					</Row>
+				</Grid>
+			</Panel>
+		)}
+	</div>
 );
 
 Partners.propTypes = {

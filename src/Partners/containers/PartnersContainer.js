@@ -6,15 +6,17 @@ import Partners from '../components/Partners';
 import { getPartners } from '../actions/partnersActions';
 
 class PartnersContainer extends Component {
-	componentDidUnmount(){
-		dispatch(updateIndustry(''));
+	componentDidMount(){
+		if(this.props.params.industry){
+			this.props.dispatch(getPartners(this.props.params.industry));
+		}
 	}
 	render(){
-		const { partners, isFetching, handleClick, industry } = this.props;
+		const { partners, isFetching, handleClick, params, industries } = this.props;
 		const content = isFetching ? <ProgressBar active now={45} /> : <Partners partners={partners}/>;
 		return(
 			<Panel>
-				{industry === '' ? <Industries handleClick={handleClick} /> : content}
+				{!params.industry ? <Industries industries={industries} handleClick={handleClick} /> : content}
 			</Panel>
 		);
 	}
@@ -23,8 +25,8 @@ class PartnersContainer extends Component {
 const mapStateToProps = (state) => {
 	return {
 		partners: state.partners.getIn(['partners']),
-		industry: state.partners.getIn(['industry']),
-		isFetching: state.partners.getIn(['getting_partners'])
+		isFetching: state.partners.getIn(['getting_partners']),
+		industries: state.partners.getIn(['industries'])
 	};
 };
 
@@ -39,10 +41,11 @@ const mapDispatchToProps = (dispatch) => {
 
 PartnersContainer.propTypes = {
 	partners: PropTypes.object.isRequired,
-	industry: PropTypes.string.isRequired,
+	params: PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	handleClick: PropTypes.func.isRequired,
-	dispatch: PropTypes.func.isRequired
+	dispatch: PropTypes.func.isRequired,
+	industries:PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PartnersContainer);
