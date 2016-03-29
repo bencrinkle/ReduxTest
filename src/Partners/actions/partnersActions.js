@@ -1,42 +1,68 @@
 import fetch from 'isomorphic-fetch';
 import { fromJS } from 'immutable';
 
-const gettingPartners = () => {
+const getPartnersPendingAction = () => {
 	return {
-		type: 'GETTING_PARTNERS'
+		type: 'GET_PARTNERS_PENDING'
 	};
 };
 
-const getPartnersSuccess = (partners) => {
+const getPartnersSuccessAction = (partners) => {
 	return {
 		type: 'GET_PARTNERS_SUCCESS',
 		partners
 	};
 };
 
-const getPartnersError = (error) => {
+const getPartnersErrorAction = (error) => {
 	return {
 		type: 'GET_PARTNERS_ERROR',
 		error
 	};
 };
 
+const updateFilterAction = (filter) => {
+	return {
+		type: 'UPDATE_FILTER',
+		filter
+	};
+};
+
+const updateSortAction = (sort) => {
+	return {
+		type: 'UPDATE_SORT',
+		sort
+	};
+};
+
 export const getPartners = (industry) => {
 	return (dispatch) => {
-		dispatch(gettingPartners());
+		dispatch(getPartnersPendingAction());
 		return fetch('http://localhost:3000/partners?trade=' + industry).then(response => {
 			if(response.ok){
 				response.json().then(json => {
-					dispatch(getPartnersSuccess(fromJS(json)));
+					dispatch(getPartnersSuccessAction(fromJS(json)));
 				});
 			} else {
 				response.json().then(json => {
-					dispatch(getPartnersError(fromJS(json)));
+					dispatch(getPartnersErrorAction(fromJS(json)));
 				});
 			}
 		})
 		.catch(error => {
 			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
+	};
+};
+
+export const updateFilter = (filter) => {
+	return (dispatch) => {
+		dispatch(updateFilterAction(filter));
+	};
+};
+
+export const updateSort = (sort) => {
+	return (dispatch) => {
+		dispatch(updateSortAction(sort));
 	};
 };

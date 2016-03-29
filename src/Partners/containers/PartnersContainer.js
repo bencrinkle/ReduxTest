@@ -1,9 +1,45 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'underscore';
 import {connect} from 'react-redux';
 import {Panel, ProgressBar} from 'react-bootstrap';
 import Industries from '../components/Industries';
 import Partners from '../components/Partners';
-import { getPartners } from '../actions/partnersActions';
+import { getPartners, updateFilter, updateSort } from '../actions/partnersActions';
+import { fromJS } from 'immutable';
+
+const filterPartners = (partners, filter) => {
+	partners = partners.toJS();
+	switch(filter){
+		case 'perDay':
+			return fromJS(_.filter(partners, (partner) => { return partner.dailyrate > 0; }));
+		case 'perHour':
+			return fromJS(_.filter(partners, (partner) => { return partner.hourlyrate > 0; }));
+		case 'outOfHours':
+			return fromJS(_.filter(partners, (partner) => { return partner.outofhours; }));
+		default:
+			return fromJS(partners);
+	}
+};
+
+const sortPartners = (partners, sort) => {
+	partners = partners.toJS();
+	switch(sort){
+		case 'phl-day':
+			return fromJS(_.sortBy(partners, 'dailyrate')).reverse();
+		case 'plh-day':
+			return fromJS(_.sortBy(partners, 'dailyrate'));
+		case 'phl-hour':
+			return fromJS(_.sortBy(partners, 'hourlyrate')).reverse();
+		case 'plh-hour':
+			return fromJS(_.sortBy(partners, 'hourlyrate'));
+		case 'rating':
+			return fromJS(_.sortBy(partners, 'rating')).reverse();
+		case 'distance':
+			return fromJS(_.sortBy(partners, 'milesaway'));
+		default:
+			return fromJS(partners);
+	}
+};
 
 class PartnersContainer extends Component {
 	componentDidMount(){
@@ -12,11 +48,11 @@ class PartnersContainer extends Component {
 		}
 	}
 	render(){
-		const { partners, isFetching, handleClick, params, industries } = this.props;
-		const content = isFetching ? <ProgressBar active now={45} /> : <Partners partners={partners}/>;
+		const { partners, isFetching, selectIndustry, params, industries, sort, filter, filteredBy, sortedBy } = this.props;
+		const content = isFetching ? <ProgressBar active now={45} /> : <Partners sort={sort} filter={filter} sortedBy={sortedBy} filteredBy={filteredBy} partners={partners}/>;
 		return(
 			<Panel>
-				{!params.industry ? <Industries industries={industries} handleClick={handleClick} /> : content}
+				{!params.industry ? <Industries industries={industries} selectIndustry={selectIndustry} /> : content}
 			</Panel>
 		);
 	}
@@ -24,16 +60,24 @@ class PartnersContainer extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		partners: state.partners.getIn(['partners']),
+		partners: sortPartners(filterPartners(state.partners.getIn(['partners']), state.partners.getIn(['filter'])), state.partners.getIn(['sort'])),
 		isFetching: state.partners.getIn(['getting_partners']),
-		industries: state.partners.getIn(['industries'])
+		industries: state.partners.getIn(['industries']),
+		filteredBy: state.partners.getIn(['filter']),
+		sortedBy: state.partners.getIn(['sort'])
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleClick: (industry) => {
+		selectIndustry: (industry) => {
 			return dispatch(getPartners(industry));
+		},
+		filter: (filter) => {
+			return dispatch(updateFilter(filter));
+		},
+		sort: (sort) => {
+			return dispatch(updateSort(sort));
 		},
 		dispatch
 	};
@@ -42,10 +86,14 @@ const mapDispatchToProps = (dispatch) => {
 PartnersContainer.propTypes = {
 	partners: PropTypes.object.isRequired,
 	params: PropTypes.object.isRequired,
+	industries:PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
-	handleClick: PropTypes.func.isRequired,
+	selectIndustry: PropTypes.func.isRequired,
 	dispatch: PropTypes.func.isRequired,
-	industries:PropTypes.object.isRequired
+	sort: PropTypes.func.isRequired,
+	filter: PropTypes.func.isRequired,
+	filteredBy: PropTypes.string.isRequired,
+	sortedBy: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PartnersContainer);

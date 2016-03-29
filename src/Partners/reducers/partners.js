@@ -17,17 +17,23 @@ const initialState = Map({
 							'Plumber',
 							'Roofer',
 							'Tiler',
-							'TV & Aerial Installer')
+							'TV & Aerial Installer'),
+	'filter': '',
+	'sort': ''
 });
 
 const partners = (state = initialState, action ) => {
 	switch(action.type){
-		case 'GETTING_PARTNERS':
+		case 'GET_PARTNERS_PENDING':
 			return state.set('getting_partners', true);
 		case 'GET_PARTNERS_SUCCESS':
 			return state.set('partners', action.partners).set('getting_partners', false);
 		case 'GET_PARTNERS_ERROR':
 			return state.set('errors', action.errors).set('getting_partners', false);
+		case 'UPDATE_FILTER':
+			return state.set('filter', action.filter);
+		case 'UPDATE_SORT':
+			return state.set('sort', action.sort);
 		default:
 			return state;
 	}
