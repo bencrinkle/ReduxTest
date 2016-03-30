@@ -35,6 +35,13 @@ const updateSortAction = (sort) => {
 	};
 };
 
+const updateShowModalAction = (id) => {
+	return {
+		type: 'UPDATE_SHOW_MODAL',
+		id
+	};
+};
+
 export const getPartners = (industry) => {
 	return (dispatch) => {
 		dispatch(getPartnersPendingAction());
@@ -64,5 +71,11 @@ export const updateFilter = (filter) => {
 export const updateSort = (sort) => {
 	return (dispatch) => {
 		dispatch(updateSortAction(sort));
+	};
+};
+
+export const updateShowModal = (id) => {
+	return (dispatch) => {
+		dispatch(updateShowModalAction(id));
 	};
 };

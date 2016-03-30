@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Panel, Image, Glyphicon, Grid, Row, Col, ButtonToolbar, DropdownButton, MenuItem, Badge, Button } from 'react-bootstrap';
+import PartnerModal from './PartnerModal';
 
 const getStars = (rating) => {
 	let stars = [];
@@ -9,7 +10,7 @@ const getStars = (rating) => {
 	return stars;
 };
 
-const Partners = ({partners, sort, filter, filteredBy, sortedBy}) => (
+const Partners = ({partners, sort, filter, filteredBy, sortedBy, showModal, updateShowModal, modalPartner}) => (
 	<Grid fluid>
 		<Row className="m-b-10">
 			<Col xs={10} md={10}>
@@ -52,7 +53,7 @@ const Partners = ({partners, sort, filter, filteredBy, sortedBy}) => (
 								</Col>
 								<Col>
 									<ButtonToolbar>
-										<Button>More Info</Button>
+										<Button onClick={() => updateShowModal(partner.getIn(['id']))}>More Info</Button>
 										<Button bsStyle="success">Chat</Button>
 									</ButtonToolbar>
 								</Col>
@@ -62,15 +63,19 @@ const Partners = ({partners, sort, filter, filteredBy, sortedBy}) => (
 				</Panel>
 			</Row>
 		)}
+		<PartnerModal partner={modalPartner} showModal={showModal} close={() => updateShowModal(-1)}/>
 	</Grid>
 );
 
 Partners.propTypes = {
 	partners: PropTypes.object.isRequired,
 	filter: PropTypes.func.isRequired,
+	sort: PropTypes.func.isRequired,
 	filteredBy: PropTypes.string.isRequired,
 	sortedBy: PropTypes.string.isRequired,
-	sort: PropTypes.func.isRequired
+	showModal: PropTypes.bool.isRequired,
+	updateShowModal: PropTypes.func.isRequired,
+	modalPartner: PropTypes.object.isRequired
 };
 
 export default Partners;

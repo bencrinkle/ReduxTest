@@ -1,4 +1,5 @@
-import {List, Map} from 'immutable';
+import {List, Map, fromJS } from 'immutable';
+import _ from 'underscore';
 
 const initialState = Map({
 	'getting_partners': false,
@@ -19,8 +20,15 @@ const initialState = Map({
 							'Tiler',
 							'TV & Aerial Installer'),
 	'filter': '',
-	'sort': ''
+	'sort': '',
+	'show_modal': false,
+	'modal_partner': Map()
 });
+
+const getPartnerModal = (partners, id) => {
+	if(id === -1) { return Map(); }
+	return fromJS(_.find(partners.toJS(), (partner) => partner.id === id));
+};
 
 const partners = (state = initialState, action ) => {
 	switch(action.type){
@@ -34,6 +42,8 @@ const partners = (state = initialState, action ) => {
 			return state.set('filter', action.filter);
 		case 'UPDATE_SORT':
 			return state.set('sort', action.sort);
+		case 'UPDATE_SHOW_MODAL':
+			return state.set('show_modal', !state.getIn(['show_modal'])).set('modal_partner', getPartnerModal(state.getIn(['partners']), action.id));
 		default:
 			return state;
 	}
