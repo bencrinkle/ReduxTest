@@ -4,7 +4,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
 
 import configureStore from './store/configureStore';
 
@@ -18,8 +17,6 @@ import PartnersContainer from './Partners/containers/PartnersContainer';
 
 //Store
 const store = configureStore({});
-
-const history = syncHistoryWithStore(browserHistory, store);
 
 const root = document.getElementById('app');
 
@@ -35,7 +32,7 @@ const routes = (
 
 render((
 	<Provider store={store}>
-		<Router history={history}>
+		<Router history={browserHistory}>
 			{routes}
 		</Router>
 	</Provider>

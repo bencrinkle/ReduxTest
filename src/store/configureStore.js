@@ -6,8 +6,7 @@ import helloWorld from '../HelloWorld/reducers/helloWorld';
 import posts from '../PostsList/reducers/posts';
 import usersList from '../Users/reducers/usersList';
 import partners from '../Partners/reducers/partners';
-import routerReducer from '../reducer/routerReducer';
-const reducers = combineReducers({counter, name: helloWorld, posts, usersList, partners, routing: routerReducer});
+const reducers = combineReducers({counter, name: helloWorld, posts, usersList, partners});
 
 export default function configureStore(initialState) {
 	const store = createStore(reducers, initialState, compose(
